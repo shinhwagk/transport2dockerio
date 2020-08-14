@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  proxy:
     runs-on: ubuntu-latest
     steps:
     - name: login dockerhub
