@@ -1,0 +1,1 @@
+GET https://quay.io/api/v1/repository/openshift/okd-content/tag/ HTTP/1.1

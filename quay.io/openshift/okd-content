@@ -1,3 +1,7 @@
 4.5.0-0.okd-2020-07-29-070316-machine-config-operator
 4.5.0-0.okd-2020-08-12-020541-machine-os-content
 4.5.0-0.okd-2020-08-12-020541-cluster-etcd-operator
+4.5.0-0.okd-2020-08-12-020541-pod
+4.5.0-0.okd-2020-08-12-020541-cluster-config-operator
+4.5.0-0.okd-2020-08-12-020541-kube-client-agent
+4.5.0-0.okd-2020-07-29-070316-kube-etcd-signer-server
