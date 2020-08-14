@@ -8,11 +8,13 @@ jobs:
   proxy:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: login dockerhub
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-    - name: pull quay.io
-      run: docker pull quay.io/openshift/okd-content:4.5.0-0.okd-2020-07-29-070316-machine-config-operator
-    - name: rename
-      run: docker tag quay.io/openshift/okd-content:4.5.0-0.okd-2020-07-29-070316-machine-config-operator shinhwagk/quayio_openshift_okd-content:4.5.0-0.okd-2020-07-29-070316-machine-config-operator
-    - name: push docker.io
-      run: docker push shinhwagk/quayio_openshift_okd-content:4.5.0-0.okd-2020-07-29-070316-machine-config-operator
+    - run: /bin/bash proxy.sh
+    # - name: pull quay.io
+    #   run: docker pull quay.io/openshift/okd-content:4.5.0-0.okd-2020-07-29-070316-machine-config-operator
+    # - name: rename
+    #   run: docker tag quay.io/openshift/okd-content:4.5.0-0.okd-2020-07-29-070316-machine-config-operator shinhwagk/quayio_openshift_okd-content:4.5.0-0.okd-2020-07-29-070316-machine-config-operator
+    # - name: push docker.io
+    #   run: docker push shinhwagk/quayio_openshift_okd-content:4.5.0-0.okd-2020-07-29-070316-machine-config-operator
