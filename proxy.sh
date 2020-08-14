@@ -13,7 +13,7 @@ ls quay.io | while read repo; do
     cat "quay.io/$repo/$image" | while read tag; do
       echo "      start process quay.io repo: ${repo} image: ${image} tag: ${tag}"
       echo "        start pull quay.io/$repo/$image:${tag}"
-      docker pull quay.io/$repo/$image:${tag}
+      docker pull -q quay.io/$repo/$image:${tag}
       echo "        success pull quay.io/$repo/$image:${tag}"
 
       echo "        start rename quay.io/$repo/$image:${tag}"
