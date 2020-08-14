@@ -18,6 +18,7 @@ ls quay.io | while read repo; do
 
       echo "        start rename quay.io/$repo/$image:${tag}"
       dockerioImage=`RenameToDockerIo $repo $image $tag`
+      docker tag quay.io/$repo/$image:${tag} ${dockerioImage}
       echo "        success rename quay.io/$repo/$image:${tag} -> ${dockerioImage}"
 
       echo "        start push ${dockerioImage}"
