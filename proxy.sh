@@ -23,6 +23,7 @@ ls quay.io | while read repo; do
       echo "        start push ${dockerioImage}"
       docker push ${dockerioImage}
       echo "        success push ${dockerioImage}"
+      echo "##############################################################################"
     done
   done
 done
