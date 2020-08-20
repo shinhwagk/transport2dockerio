@@ -1,15 +1,16 @@
 #!/bin/bash
 
 DOCKERHUB_OWNER=shinhwagk
-DOCKERHUB_IMAGE_PREFIX=quayio
+DOCKERHUB_IMAGE_PREFIX="quayio"
 registry="quay.io"
 
 RenameToDockerIo(){
-    echo "shinhwagk/quayio_${1}_${2}:${3}"
+    echo "${DOCKERHUB_OWNER}/${DOCKERHUB_IMAGE_PREFIX}_${1}_${2}:${3}"
 }
 
+# exist if return http_code: 200
 checkImageExistInDockerHub(){
-  curl -s -o/dev/null -w "%{http_code}" https://hub.docker.com/v2/repositories/${1}/tags/${2}
+  curl -s -o /dev/null -w "%{http_code}" https://hub.docker.com/v2/repositories/${1}/tags/${2}
 }
 
 fun_output(){
