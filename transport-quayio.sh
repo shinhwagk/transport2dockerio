@@ -13,15 +13,15 @@ checkImageExistInDockerHub(){
 }
 
 fun_output(){
-  curl -s "https://quay.io/api/v1/repository/${1}/${2}/tag/?limit=100&page=${3}&onlyActiveTags=true"
+  curl -s "https://quay.io/api/v1/repository/${1}/${2}/tag/?limit=100&page=${3}&onlyActiveTags=true" | base64
 }
 
 fun_tags_length() {
-    echo ${1} | jq '.tags | length'
+    echo ${1} | base64 -d | jq '.tags | length'
 }
 
 func_tags() {
-    echo ${1} | jq -r '.tags[].name'
+    echo ${1} | base64 -d | jq -r '.tags[].name'
 }
 
 func_image_transport() {
