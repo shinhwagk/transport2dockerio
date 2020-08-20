@@ -1,8 +1,10 @@
-name: quay.io to docker.io
+name: other image to docker.io
 
 on:
   push:
     branches: [ master ]
+  schedule:
+    - cron: '0 * * * *'
 
 jobs:
   quay.io:
