@@ -45,7 +45,7 @@ func_image_transport() {
     done
 }
 
-
+func_image_transport openshift okd-content
 
 # # Porcess quay.io
 # registry="quay.io"
