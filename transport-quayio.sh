@@ -39,7 +39,7 @@ func_image_transport() {
     local page=1
     while true; do
         local output=`fun_output ${repo} ${image} ${page}`
-        if [ $(echo "$output" | jq empty &>/dev/null; echo $?) -eq 4 ]; then
+        if [ $(echo "$output" | base64 -d | jq -e . &>/dev/null; echo $?) -eq 4 ]; then
             continue;
         fi
         local tags_len=`fun_tags_length "${output}"`
