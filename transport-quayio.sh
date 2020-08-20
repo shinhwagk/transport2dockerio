@@ -41,6 +41,7 @@ func_image_transport() {
         docker push ${dockerioImage}
     done
     local tag_len=`fun_tags_length ${output}`
+    echo $tag_len
     [[ ${tag_len} -le 100 ]] && break || let PAGE+=1
     done
 }
