@@ -17,32 +17,32 @@ fun_output(){
 }
 
 fun_tags_length() {
-    echo ${1} | base64 -d | jq '.tags | length'
+    echo "${1}" | base64 -d | jq '.tags | length'
 }
 
 func_tags() {
-    echo ${1} | base64 -d | jq -r '.tags[].name'
+    echo "${1}" | base64 -d | jq -r '.tags[].name'
 }
 
 func_image_transport() {
     local repo=${1}
     local image=${2}
-    local PAGE=1
+    local page=1
     while true; do
-    local output=`fun_output ${repo} ${image} $PAGE`
-    for tag in `func_tags ${output}`; do
-        local exist=`checkImageExistInDockerHub ${DOCKERHUB_OWNER}/${DOCKERHUB_IMAGE_PREFIX}_${repo}_${image} ${tag}`
-        if [ "${exist}" == "200" ]; then
-            continue;
-        fi
-        docker pull -q ${registry}/${repo}/${image}:${tag}
-        dockerioImage=`RenameToDockerIo $repo $image $tag`
-        docker tag ${registry}/$repo/$image:${tag} ${dockerioImage}
-        docker push ${dockerioImage}
-    done
-    local tag_len=`fun_tags_length ${output}`
-    echo $tag_len
-    [[ ${tag_len} -le 100 ]] && break || let PAGE+=1
+        local output=`fun_output ${repo} ${image} $page`
+        for tag in `func_tags ${output}`; do
+            local exist=`checkImageExistInDockerHub ${DOCKERHUB_OWNER}/${DOCKERHUB_IMAGE_PREFIX}_${repo}_${image} ${tag}`
+            if [ "${exist}" == "200" ]; then
+                continue;
+            fi
+            docker pull -q ${registry}/${repo}/${image}:${tag}
+            dockerioImage=`RenameToDockerIo $repo $image $tag`
+            docker tag ${registry}/$repo/$image:${tag} ${dockerioImage}
+            docker push ${dockerioImage}
+        done
+        local tag_len=`fun_tags_length ${output}`
+        echo $tag_len
+        [[ ${tag_len} -le 100 ]] && break || let page+=1
     done
 }
 
