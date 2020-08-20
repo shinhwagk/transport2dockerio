@@ -27,7 +27,7 @@ func_tags() {
 func_image_transport() {
     local repo=${1}
     local image=${2}
-    local PAGE=0
+    local PAGE=1
     while true; do
     local output=`fun_output ${repo} ${image} $PAGE`
     for tag in `func_tags ${output}`; do
