@@ -39,6 +39,9 @@ func_image_transport() {
     local page=1
     while true; do
         local output=`fun_output ${repo} ${image} ${page}`
+        if [ $(echo "$output" | jq empty &>/dev/null; echo $?) -eq 4 ]; then
+            continue;
+        fi
         local tags_len=`fun_tags_length "${output}"`
         if [ ${tags_len} -ne 0 ]; then
             break;
@@ -51,9 +54,8 @@ func_image_transport() {
             if [ "${exist}" == "200" ]; then
                 continue;
             fi
-            func_transport $repo $image $tag &
+            func_transport $repo $image $tag
         done
-        wait;
     done
 }
 
