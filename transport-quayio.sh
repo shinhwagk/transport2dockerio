@@ -3,7 +3,7 @@
 DOCKERHUB_OWNER=shinhwagk
 DOCKERHUB_IMAGE_PREFIX="quayio"
 registry="quay.io"
-RequestLimit=10
+RequestLimit=100
 
 RenameToDockerIo(){
     echo "${DOCKERHUB_OWNER}/${DOCKERHUB_IMAGE_PREFIX}_${1}_${2}:${3}"
@@ -15,7 +15,7 @@ checkImageExistInDockerHub(){
 }
 
 fun_output(){
-  curl -s "https://quay.io/api/v1/repository/${1}/${2}/tag/?limit=${RequestLimit}&page=${3}&onlyActiveTags=true" | base64
+  curl -s "https://quay.io/api/v1/repository/${1}/${2}/tag/?limit=100&page=${3}&onlyActiveTags=true" | base64
 }
 
 fun_tags_length() {
