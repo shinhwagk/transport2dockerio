@@ -46,7 +46,15 @@ func_image_transport() {
     done
 }
 
-func_image_transport openshift okd-content
+bootstrap(){
+    ls ${registry} | while read repo; do
+        ls "${registry}/$repo" | while read image; do
+            func_image_transport ${repo} ${image}
+        done
+    done
+}
+
+bootstrap
 
 # # Porcess quay.io
 # registry="quay.io"
