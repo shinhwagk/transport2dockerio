@@ -39,14 +39,13 @@ func_image_transport() {
     local page=1
     while true; do
         local output=`fun_output ${repo} ${image} ${page}`
+        let page+=1
         if [ $(echo "$output" | base64 -d | jq -e . &>/dev/null; echo $?) -eq 4 ]; then
             continue;
         fi
         local tags_len=`fun_tags_length "${output}"`
         if [ ${tags_len} -ne 0 ]; then
             break;
-        else
-            let page+=1
         fi
         for tag in `func_tags "${output}"`; do
             echo "process ${repo} ${image} ${page}."
