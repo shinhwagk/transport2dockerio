@@ -41,8 +41,8 @@ func_image_transport() {
             docker tag ${registry}/$repo/$image:${tag} ${dockerioImage}
             docker push ${dockerioImage}
         done
-        local tag_len=`fun_tags_length "${output}"`
-        [[ ${tag_len} -lt 100 ]] && break || let page+=1
+        local tags_len=`fun_tags_length "${output}"`
+        [[ ${tags_len} -lt 100 ]] && break || let page+=1
     done
 }
 
