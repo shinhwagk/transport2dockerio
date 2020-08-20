@@ -30,7 +30,7 @@ func_transport() {
     docker pull -q ${registry}/${1}/${2}:${3}
     dockerioImage=`RenameToDockerIo $1 $2 $3`
     docker tag ${registry}/$1/$2:${3} ${dockerioImage}
-    docker push ${dockerioImage}
+    docker push ${dockerioImage} > /dev/null
 }
 
 func_image_transport() {
@@ -49,7 +49,7 @@ func_image_transport() {
         done
         wait;
         local tags_len=`fun_tags_length "${output}"`
-        [[ ${tags_len} -lt ${RequestLimit} ]] && break || let page+=1
+        [[ ${tags_len} -ne ${RequestLimit} ]] && let page+=1 || break;
     done
 }
 
