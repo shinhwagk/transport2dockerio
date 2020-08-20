@@ -31,6 +31,7 @@ func_image_transport() {
     while true; do
         local output=`fun_output ${repo} ${image} ${page}`
         for tag in `func_tags "${output}"`; do
+            echo "process ${repo} ${image} ${page}."
             local exist=`checkImageExistInDockerHub ${DOCKERHUB_OWNER}/${DOCKERHUB_IMAGE_PREFIX}_${repo}_${image} ${tag}`
             if [ "${exist}" == "200" ]; then
                 continue;
