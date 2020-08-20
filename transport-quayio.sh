@@ -46,7 +46,7 @@ func_image_transport() {
                 continue;
             fi
             func_transport $repo $image $tag &
-        done &
+        done
         wait;
         local tags_len=`fun_tags_length "${output}"`
         [[ ${tags_len} -lt ${RequestLimit} ]] && break || let page+=1
