@@ -3,6 +3,7 @@
 DOCKERHUB_OWNER=shinhwagk
 DOCKERHUB_IMAGE_PREFIX="quayio"
 registry="quay.io"
+RequestLimit=10
 
 RenameToDockerIo(){
     echo "${DOCKERHUB_OWNER}/${DOCKERHUB_IMAGE_PREFIX}_${1}_${2}:${3}"
@@ -14,7 +15,7 @@ checkImageExistInDockerHub(){
 }
 
 fun_output(){
-  curl -s "https://quay.io/api/v1/repository/${1}/${2}/tag/?limit=100&page=${3}&onlyActiveTags=true" | base64
+  curl -s "https://quay.io/api/v1/repository/${1}/${2}/tag/?limit=${RequestLimit}&page=${3}&onlyActiveTags=true" | base64
 }
 
 fun_tags_length() {
@@ -23,6 +24,13 @@ fun_tags_length() {
 
 func_tags() {
     echo "${1}" | base64 -d | jq -r '.tags[].name'
+}
+
+func_transport() {
+    docker pull -q ${registry}/${1}/${2}:${3}
+    dockerioImage=`RenameToDockerIo $1 $2 $3`
+    docker tag ${registry}/$1/$2:${3} ${dockerioImage}
+    docker push ${dockerioImage}
 }
 
 func_image_transport() {
@@ -37,13 +45,11 @@ func_image_transport() {
             if [ "${exist}" == "200" ]; then
                 continue;
             fi
-            docker pull -q ${registry}/${repo}/${image}:${tag}
-            dockerioImage=`RenameToDockerIo $repo $image $tag`
-            docker tag ${registry}/$repo/$image:${tag} ${dockerioImage}
-            docker push ${dockerioImage}
-        done
+            func_transport $repo $image $tag &
+        done &
+        wait;
         local tags_len=`fun_tags_length "${output}"`
-        [[ ${tags_len} -lt 100 ]] && break || let page+=1
+        [[ ${tags_len} -lt ${RequestLimit} ]] && break || let page+=1
     done
 }
 
