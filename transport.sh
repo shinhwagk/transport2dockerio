@@ -5,21 +5,22 @@ RenameToDockerIo(){
 }
 
 # Porcess quay.io
-echo "start process quay.io"
-ls quay.io | while read repo; do
-  echo "  start process quay.io repo: ${repo}"
-  ls "quay.io/$repo" | while read image; do
-    echo "    start process quay.io repo: ${repo} image: ${image}"
-    cat "quay.io/$repo/$image" | while read tag; do
-      echo "      start process quay.io repo: ${repo} image: ${image} tag: ${tag}"
-      echo "        start pull quay.io/$repo/$image:${tag}"
-      docker pull -q quay.io/$repo/$image:${tag}
-      echo "        success pull quay.io/$repo/$image:${tag}"
+registry="quay.io"
+echo "start process ${registry}"
+ls ${registry} | while read repo; do
+  echo "  start process ${registry} repo: ${repo}"
+  ls "${registry}/$repo" | while read image; do
+    echo "    start process ${registry} repo: ${repo} image: ${image}"
+    cat "${registry}/$repo/$image" | while read tag; do
+      echo "      start process ${registry} repo: ${repo} image: ${image} tag: ${tag}"
+      echo "        start pull ${registry}/$repo/$image:${tag}"
+      docker pull -q ${registry}/$repo/$image:${tag}
+      echo "        success pull ${registry}/$repo/$image:${tag}"
 
-      echo "        start rename quay.io/$repo/$image:${tag}"
+      echo "        start rename ${registry}/$repo/$image:${tag}"
       dockerioImage=`RenameToDockerIo $repo $image $tag`
-      docker tag quay.io/$repo/$image:${tag} ${dockerioImage}
-      echo "        success rename quay.io/$repo/$image:${tag} -> ${dockerioImage}"
+      docker tag ${registry}/$repo/$image:${tag} ${dockerioImage}
+      echo "        success rename ${registry}/$repo/$image:${tag} -> ${dockerioImage}"
 
       echo "        start push ${dockerioImage}"
       docker push ${dockerioImage}
