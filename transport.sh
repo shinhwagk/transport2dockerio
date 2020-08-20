@@ -4,6 +4,10 @@ RenameToDockerIo(){
     echo "shinhwagk/quayio_${1}_${2}:${3}"
 }
 
+checkImageExistInDockerHub(){
+  curl -s -o/dev/null -w "%{http_code}" https://hub.docker.com/v2/repositories/${1}/tags/${2}
+}
+
 # Porcess quay.io
 registry="quay.io"
 echo "start process ${registry}"
@@ -14,8 +18,7 @@ ls ${registry} | while read repo; do
     cat "${registry}/$repo/$image" | while read tag; do
       echo "      start process ${registry} repo: ${repo} image: ${image} tag: ${tag}"
       echo "        start pull ${registry}/$repo/$image:${tag}"
-      
-      exist=`curl -s -o/dev/null -w "%{http_code}" https://${registry}/v1/repositories/${repo}/${image}/tags/${tag}`
+      exist=`checkImageExistInDockerHub shinhwagk/quayio_${repo}_${image} ${tag}`
       echo "code: ${exist}"
       if [ "${exist}" == "200" ]; then
         continue;
