@@ -49,7 +49,7 @@ func_image_transport() {
         done
         wait;
         local tags_len=`fun_tags_length "${output}"`
-        [[ ${tags_len} -ne ${RequestLimit} ]] && let page+=1 || break;
+        [[ ${tags_len} -ne 0 ]] && let page+=1 || break;
     done
 }
 
