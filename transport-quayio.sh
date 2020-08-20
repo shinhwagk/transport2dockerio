@@ -55,7 +55,7 @@ func_image_transport() {
 
 bootstrap(){
     ls ${registry} | while read repo; do
-        ls "${registry}/$repo" | while read image; do
+        cat "${registry}/$repo" | while read image; do
             func_image_transport ${repo} ${image}
         done
     done
