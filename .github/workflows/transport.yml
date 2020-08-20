@@ -7,7 +7,7 @@ on:
     - cron: '0 * * * *'
 
 jobs:
-  quay.io:
+  quay-io:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
