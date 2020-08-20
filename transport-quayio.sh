@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 DOCKERHUB_OWNER=shinhwagk
 DOCKERHUB_IMAGE_PREFIX="quayio"
