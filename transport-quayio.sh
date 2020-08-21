@@ -42,6 +42,8 @@ func_image_transport() {
         let page+=1
         if [ $(echo "$output" | base64 -d | jq -e . &>/dev/null; echo $?) -eq 4 ]; then
             continue;
+        else
+            echo "output valid."
         fi
         local tags_len=`fun_tags_length "${output}"`
         if [ ${tags_len} -ne 0 ]; then
