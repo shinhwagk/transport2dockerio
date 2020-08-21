@@ -41,7 +41,7 @@ func_image_transport() {
         local output=`fun_output ${repo} ${image} ${page}`
         let page+=1
         if [ $(echo "$output" | base64 -d | jq -e . &>/dev/null; echo $?) -eq 4 ]; then
-            continue;
+            exit 1
         else
             echo "output valid."
         fi
