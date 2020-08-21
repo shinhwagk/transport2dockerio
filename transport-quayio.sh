@@ -46,9 +46,9 @@ func_image_transport() {
             echo "output valid."
         fi
         local tags_len=`fun_tags_length "${output}"`
-        if [ ${tags_len} -ne 0 ]; then
-            break;
-        fi
+        
+        [ ${tags_len} -eq 0 ] && break;
+        
         for tag in `func_tags "${output}"`; do
             echo "process ${repo} ${image} ${page}."
             local exist=`checkImageExistInDockerHub ${DOCKERHUB_OWNER}/${DOCKERHUB_IMAGE_PREFIX}_${repo}_${image} ${tag}`
@@ -57,6 +57,7 @@ func_image_transport() {
             fi
             func_transport $repo $image $tag
         done
+        [ ${tags_len} -lt 100 ] && break;
     done
 }
 
