@@ -18,7 +18,7 @@ checkImageExistInDockerHub(){
 }
 
 func_output_tags (){
-  curl -s "https://quay.io/api/v1/repository/${1}/tag/?limit=100&page=${2}&onlyActiveTags=true" | jq -c .tags[]
+  curl -s "https://quay.io/api/v1/repository/${1}/tag/?limit=100&page=${2}&onlyActiveTags=true" | jq -c .tags[] | base64
 }
 
 func_transport() {
@@ -35,8 +35,8 @@ func_image_transport() {
     while true; do
         for tagobj in `func_output_tags ${image} ${page}`; do
           echo $tagobj
-          local name=$(echo "${tagobj}" | jq .name)
-          local start_ts=$(echo "${tagobj}" | jq .start_ts)
+          local name=$(echo "${tagobj}" | base64 -d | jq .name)
+          local start_ts=$(echo "${tagobj}" | base64 -d | jq .start_ts)
           echo $start_ts
 
           let page+=1
