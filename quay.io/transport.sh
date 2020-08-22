@@ -21,10 +21,6 @@ func_output_tags (){
   curl -s "https://quay.io/api/v1/repository/${1}/tag/?limit=100&page=${2}&onlyActiveTags=true" | jq -c .tags[]
 }
 
-func_tags() {
-    echo "${1}" | base64 -d | jq '.tags[].name'
-}
-
 func_transport() {
     docker pull -q ${registry}/${1}:${2}
     dockerioImage=`RenameImage $1 $2`
@@ -38,8 +34,10 @@ func_image_transport() {
 
     while true; do
         for tagobj in `func_output_tags ${image} ${page}`; do
+          echo $tagobj
           local name=$(echo ${tagobj} | jq .name)
           local start_ts=$(echo ${tagobj} | jq .start_ts)
+          echo $start_ts
 
           let page+=1
 
