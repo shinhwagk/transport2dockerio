@@ -1,4 +1,4 @@
-name: other image to docker.io
+name: transport image to docker.io
 
 on:
   push:
