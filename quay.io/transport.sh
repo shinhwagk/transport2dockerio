@@ -43,7 +43,7 @@ func_image_transport() {
 
           let page+=1
 
-          if [ $start_ts -lt $current_ts ]; then
+          if [[ $start_ts -lt $current_ts ]]; then
             echo "process ${image} ${page}."
             local exist=`checkImageExistInDockerHub ${image} ${tag}`
             [ "${exist}" == "200" ] && continue || func_transport $image $tag
