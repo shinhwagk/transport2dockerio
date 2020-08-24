@@ -33,6 +33,7 @@ func_image_transport() {
     local page=1
 
     while true; do
+        local _exit=0
         while read tagobj; do
           local name=$(echo "${tagobj}" | jq .name)
           local start_ts=$(echo "${tagobj}" | jq .start_ts)
@@ -44,8 +45,9 @@ func_image_transport() {
             local exist=`checkImageExistInDockerHub ${image} ${name}`
             [ "${exist}" == "200" ] && continue || func_transport $image $name
           else
-						return
+						_exit=1
 					fi
+          [ $exit == 1 ] && break;
 				done <<< `func_output_tags ${image} ${page}`
     done
 }
