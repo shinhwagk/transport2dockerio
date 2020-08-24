@@ -33,7 +33,6 @@ func_image_transport() {
     local page=1
 
     while true; do
-        let page+=1
         local _exit=0
         while read tagobj; do
           local name=$(echo "${tagobj}" | jq .name)
@@ -48,6 +47,7 @@ func_image_transport() {
 					fi
           [[ $_exit == 1 ]] && break;
 				done <<< `func_output_tags ${image} ${page}`
+        let page+=1
     done
 }
 
