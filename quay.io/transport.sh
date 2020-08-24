@@ -47,7 +47,7 @@ func_image_transport() {
           else
 						_exit=1
 					fi
-          [ $exit == 1 ] && break;
+          [[ $_exit == 1 ]] && break;
 				done <<< `func_output_tags ${image} ${page}`
     done
 }
