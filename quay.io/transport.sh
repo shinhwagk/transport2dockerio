@@ -43,7 +43,7 @@ func_image_transport() {
             local exist=`checkImageExistInDockerHub ${image} ${name}`
             [ "${exist}" == "200" ] && continue || func_transport $image $name
           else
-						_exit=1
+						_exit=1; break;
 					fi
 				done <<< `func_output_tags ${image} ${page}`
         [[ $_exit == 1 ]] && break || let page+=1;
