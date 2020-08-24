@@ -33,12 +33,11 @@ func_image_transport() {
     local page=1
 
     while true; do
+        let page+=1
         local _exit=0
         while read tagobj; do
           local name=$(echo "${tagobj}" | jq .name)
-          local start_ts=$(echo "${tagobj}" | jq .start_ts)
-
-          let page+=1
+          local start_ts=$(echo "${tagobj}" | jq .start_ts)  
 
           if [[ ${start_ts} -gt ${current_ts} ]]; then
             echo "process ${image} ${page}."
