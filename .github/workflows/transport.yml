@@ -12,20 +12,26 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: transport
       run: |
-        cat 2_dockerio_images | grep -v "^\s*$" | while read image; do
-          echo "process $image"
+        DOCKERHUB_OWNER=shinhwagk
+        echo -e "\n" >> images
+        cat images | grep -v "^\s*$" | sort | uniq | while read image; do
+          echo "process ${image}"
           if [[ ${image:0:10} = "k8s.gcr.io" ]]; then
             image_name="${image##*/}"
-            new_image="shinhwagk/kgi_${image_name}"
-            echo "$image --> $target success."
+            new_image="${DOCKERHUB_OWNER}/kgi_${image_name}"
+            echo $image_name
+            echo $new_image
+            docker pull $image
+            docker tag $image $new_image
+            docker push $new_image
+            echo "$source --> $target success."
           fi
-        done
-    - name: clean
-      run: |
-        cat /dev/null > 2_dockerio_images
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add 2_dockerio_images
-        git commit -m "clean file:2_dockerio_images."
-        git push
+#     - name: clean
+#       run: |
+#         cat /dev/null > 2_dockerio_images
+#         git config --local user.email "github-actions[bot]@users.noreply.github.com"
+#         git config --local user.name "github-actions[bot]"
+#         git add 2_dockerio_images
+#         git commit -m "clean file:2_dockerio_images."
+#         git push
 
