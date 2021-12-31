@@ -2,7 +2,7 @@ name: transport image to docker.io
 
 on:
   push:
-    path:
+    paths:
       - 2_dockerio_images
 
 jobs:
