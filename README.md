@@ -1,4 +1,3 @@
-# images-proxy
+# transport2dockerio
 
-
-podman inspect 6c8910a2305d --format='{{index .RepoDigests 0}}'
+The image in the images file will be transferred to dockerio
