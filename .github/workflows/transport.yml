@@ -15,6 +15,7 @@ jobs:
     - name: transport
       run: |
         cat 2_dockerio_images | grep -v "^\s*$" | while read image; do
+          echo "process $image"
           if [[ ${image:0:10} = "k8s.gcr.io" ]]; then
             image_name="${image##*/}"
             new_image="${{ secrets.DOCKER_USERNAME }}/kgi_${image_name}"
