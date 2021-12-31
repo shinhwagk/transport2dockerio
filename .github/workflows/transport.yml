@@ -17,6 +17,7 @@ jobs:
           echo "process ${image}"
           if [[ ${image:0:10} = "k8s.gcr.io" ]]; then
             image_name="${image##*/}"
+            echo "### image name: ${image_name}"
             new_image="shinhwagk/kgi_${image_name}"
             echo $image_name
             echo $new_image
