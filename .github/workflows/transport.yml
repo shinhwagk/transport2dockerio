@@ -25,6 +25,7 @@ jobs:
             docker push $new_image
             echo "$source --> $target success."
           fi
+        done
 #     - name: clean
 #       run: |
 #         cat /dev/null > 2_dockerio_images
