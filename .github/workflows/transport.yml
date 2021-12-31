@@ -17,22 +17,22 @@ jobs:
           echo "process ${image}"
           if [[ ${image:0:10} = "k8s.gcr.io" ]]; then
             image_name="${image##*/}"
-            echo "### image name: ${image_name}"
             new_image="shinhwagk/kgi_${image_name}"
-            echo $image_name
-            echo $new_image
             docker pull $image
             docker tag $image $new_image
             docker push $new_image
             echo "$source --> $target success."
+          else
+            echo "error ${image}"
+            exit 1
           fi
         done
-#     - name: clean
-#       run: |
-#         cat /dev/null > 2_dockerio_images
-#         git config --local user.email "github-actions[bot]@users.noreply.github.com"
-#         git config --local user.name "github-actions[bot]"
-#         git add 2_dockerio_images
-#         git commit -m "clean file:2_dockerio_images."
-#         git push
+    - name: clean
+      run: |
+        cat /dev/null > images
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add images
+        git commit -m "clean file:images."
+        git push
 
