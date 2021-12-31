@@ -19,7 +19,6 @@ jobs:
           if [[ ${image:0:10} = "k8s.gcr.io" ]]; then
             image_name="${image##*/}"
             new_image="shinhwagk/kgi_${image_name}"
-            echo $image_name $new_image
             docker pull $image
             docker tag $image $new_image
             docker push $new_image
