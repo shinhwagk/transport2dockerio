@@ -17,7 +17,7 @@ jobs:
           echo "process ${image}"
           if [[ ${image:0:10} = "k8s.gcr.io" ]]; then
             image_name="${image##*/}"
-            new_image="shinhwagk/kgi_${image_name}"
+            new_image="shinhwagk/${image_name}"
             docker pull $image
             docker tag $image $new_image
             docker push $new_image
