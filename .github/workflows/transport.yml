@@ -13,7 +13,8 @@ jobs:
     - name: transport
       run: |
         echo -e "\n" >> images
-        cat images | grep -v "^\s*$" | sort | uniq | while read image; do
+        tr -d '\r' < images > images1
+        cat images1 | grep -v "^\s*$" | sort | uniq | while read image; do
           echo "process ${image}"
           docker pull "$image"
           image_name="${image##*/}"
